@@ -23,6 +23,7 @@ public class UserServiceTest {
     private PasswordEncoder passwordEncoder;
     private UserService userService;
 
+    // Khởi tạo các giá trị
     @Before
     public void init() {
         userRepository = createUserRepository();
@@ -43,6 +44,7 @@ public class UserServiceTest {
         verify(passwordEncoder).encode(PASSWORD);
     }
 
+    // Kiểm tra số lần gọi method
     @Test
     public void checkTimeCallMethod() {
         boolean userIsValid = userService.isValidUser(ENABLED_USER.getId(), PASSWORD);
@@ -56,7 +58,7 @@ public class UserServiceTest {
         verify(passwordEncoder,times(1)).encode(PASSWORD);
     }
 
-
+    // Kiểm tra thứ tự gọi method
     @Test
     public void shouldBeInvalidForInvalidId() {
         boolean userIsValid = userService.isValidUser("invalid id", PASSWORD);
@@ -68,6 +70,7 @@ public class UserServiceTest {
         inOrder.verify(passwordEncoder, never()).encode(anyString());
     }
 
+    // Kiểm tra giá trị của đối số khi một method được gọi
     @Test
     public void shouldBeInvalidForInvalidPassword() {
         boolean userIsValid = userService.isValidUser(ENABLED_USER.getId(), INVALID_PASSWORD_MESSAGE);
@@ -83,6 +86,7 @@ public class UserServiceTest {
         assertEquals(INVALID_PASSWORD_MESSAGE, value);
     }
 
+    // Kiểm tra xem hàm có được gọi theo đúng logic không
     @Test
     public void shouldBeInvalidForDisabledUser() {
         boolean userIsValid = userService.isValidUser(DISABLED_USER.getId(), PASSWORD);
